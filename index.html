@@ -1,0 +1,4639 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0">
+
+  <title>Carivo | Premium Car Rental & Sales</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"
+  >
+
+  <style>
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      overflow-x: hidden;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .page.active {
+      display: block;
+    }
+
+    .login-screen {
+      display: flex;
+      height: 100vh;
+      min-height: 100vh;
+      overflow: hidden;
+    }
+
+    .login-screen.hidden {
+      display: none;
+    }
+
+    .login-screen > div {
+      height: 100vh;
+      min-height: 0;
+    }
+
+    .login-screen .grid {
+      height: 100vh;
+      min-height: 0;
+    }
+
+    .car-card {
+      transition: all 0.25s ease;
+    }
+
+    .car-card:hover {
+      transform: translateY(-6px);
+    }
+
+    .login-image {
+      background-image:
+        linear-gradient(
+          rgba(15, 23, 42, 0.45),
+          rgba(30, 64, 175, 0.65)
+        ),
+        url("https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=90");
+
+      background-size: cover;
+      background-position: center;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      outline: none;
+    }
+
+
+    /* =========================================================
+       TOBI CARIVO CUSTOM LOGO
+    ========================================================= */
+
+    .tobi-logo {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .tobi-logo-mark {
+      width: 44px;
+      height: 44px;
+      background: linear-gradient(135deg, #2563eb, #1d4ed8);
+      color: white;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      box-shadow: 0 8px 20px rgba(37, 99, 235, 0.25);
+      flex-shrink: 0;
+    }
+
+    .tobi-logo-mark::before {
+      content: "TC ";
+      font-size: 22px;
+      font-weight: 900;
+      position: absolute;
+      top: 5px;
+      line-height: 1;
+    }
+
+    .tobi-logo-mark i {
+      position: absolute;
+      bottom: 4px;
+      font-size: 10px;
+    }
+
+    .tobi-logo-text {
+      font-weight: 800;
+      letter-spacing: -0.5px;
+      font-size: 1.25rem;
+    }
+
+    .tobi-logo-text span {
+      color: #2563eb;
+    }
+
+
+    /* =========================================================
+       LOGIN PAGE COMPACT SIZING
+    ========================================================= */
+
+    @media (max-height: 800px) {
+
+      .login-screen .px-5 {
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+      }
+
+      .login-screen .mb-8 {
+        margin-bottom: 1rem;
+      }
+
+      .login-screen .mb-6 {
+        margin-bottom: 0.75rem;
+      }
+
+      .login-screen .mt-5 {
+        margin-top: 0.75rem;
+      }
+
+      .login-screen .mt-7 {
+        margin-top: 1rem;
+      }
+
+      .login-screen .p-6 {
+        padding: 1.25rem;
+      }
+
+      .login-screen .py-4 {
+        padding-top: 0.7rem;
+        padding-bottom: 0.7rem;
+      }
+
+      .login-screen .mt-6 {
+        margin-top: 0.9rem;
+      }
+
+    }
+
+    @media (max-height: 650px) {
+
+      .login-screen .tobi-logo-mark {
+        width: 42px;
+        height: 42px;
+      }
+
+      .login-screen h1 {
+        font-size: 1.5rem;
+      }
+
+      .login-screen .login-card {
+        padding: 1rem;
+      }
+
+      .login-screen .login-info {
+        padding: 0.75rem;
+      }
+
+      .login-screen .login-footer {
+        display: none;
+      }
+
+    }
+
+  </style>
+
+</head>
+
+
+<body class="bg-gray-50 text-gray-800">
+
+
+<!-- ========================================================= -->
+<!-- LOGIN SCREEN -->
+<!-- ========================================================= -->
+
+<div
+  id="loginScreen"
+  class="login-screen min-h-screen bg-gray-100">
+
+  <div class="grid lg:grid-cols-2 w-full min-h-screen">
+
+
+    <!-- LEFT IMAGE -->
+
+    <div
+      class="login-image hidden lg:flex
+             relative
+             items-end
+             p-12
+             text-white">
+
+      <div class="relative z-10 max-w-lg">
+
+        <div
+          class="w-14 h-14
+                 bg-white/20
+                 backdrop-blur-md
+                 rounded-2xl
+                 flex items-center
+                 justify-center
+                 text-2xl
+                 mb-6">
+
+          <i class="fa-solid fa-car-side"></i>
+
+        </div>
+
+        <h1 class="text-5xl font-bold leading-tight">
+
+          Your journey
+          <span class="text-blue-200">
+            starts here.
+          </span>
+
+        </h1>
+
+        <p class="text-blue-100 mt-5 text-lg">
+
+          Discover premium vehicles,
+          rent with confidence or find
+          your next dream car with Carivo.
+
+        </p>
+
+        <div class="flex gap-6 mt-8 text-sm">
+
+          <span>
+            <i class="fa-solid fa-circle-check mr-2"></i>
+            Premium Cars
+          </span>
+
+          <span>
+            <i class="fa-solid fa-shield-halved mr-2"></i>
+            Trusted
+          </span>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- LOGIN FORM -->
+
+    <div
+      class="flex items-center
+             justify-center
+             px-5 py-10">
+
+      <div class="w-full max-w-md">
+
+
+        <!-- LOGO -->
+
+        <div class="text-center mb-8">
+
+          <div class="tobi-logo justify-center">
+
+            <div class="tobi-logo-mark">
+
+              <i class="fa-solid fa-car-side"></i>
+
+            </div>
+
+          </div>
+
+          <h1
+            class="text-3xl
+                   font-bold
+                   text-gray-900
+                   mt-4">
+
+            Welcome to Carivo
+
+          </h1>
+
+          <p class="text-gray-500 mt-2">
+
+            Sign in to continue to your account
+
+          </p>
+
+        </div>
+
+
+        <!-- LOGIN CARD -->
+
+        <div
+          class="login-card
+                 bg-white
+                 rounded-3xl
+                 shadow-xl
+                 p-6 sm:p-8">
+
+
+          <form onsubmit="loginUser(event)">
+
+
+            <!-- EMAIL -->
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Email Address
+
+            </label>
+
+            <div class="relative mb-5">
+
+              <i
+                class="fa-solid
+                       fa-envelope
+                       absolute
+                       left-4
+                       top-4
+                       text-gray-400"></i>
+
+              <input
+                id="loginEmail"
+                type="email"
+                required
+                placeholder="you@example.com"
+                class="w-full
+                       border
+                       rounded-xl
+                       p-3
+                       pl-11
+                       focus:ring-2
+                       focus:ring-blue-500">
+
+            </div>
+
+
+            <!-- PASSWORD -->
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Password
+
+            </label>
+
+            <div class="relative">
+
+              <i
+                class="fa-solid
+                       fa-lock
+                       absolute
+                       left-4
+                       top-4
+                       text-gray-400"></i>
+
+              <input
+                id="loginPassword"
+                type="password"
+                required
+                placeholder="Enter your password"
+                class="w-full
+                       border
+                       rounded-xl
+                       p-3
+                       pl-11
+                       pr-12
+                       focus:ring-2
+                       focus:ring-blue-500">
+
+              <button
+                type="button"
+                onclick="togglePassword()"
+                class="absolute
+                       right-4
+                       top-3.5
+                       text-gray-400">
+
+                <i
+                  id="passwordIcon"
+                  class="fa-solid fa-eye">
+                </i>
+
+              </button>
+
+            </div>
+
+
+            <!-- REMEMBER -->
+
+            <div
+              class="flex
+                     items-center
+                     justify-between
+                     mt-5
+                     text-sm">
+
+              <label
+                class="flex
+                       items-center
+                       gap-2">
+
+                <input
+                  type="checkbox"
+                  class="accent-blue-600">
+
+                Remember me
+
+              </label>
+
+              <button
+                type="button"
+                onclick="forgotPassword()"
+                class="text-blue-600
+                       font-medium">
+
+                Forgot password?
+
+              </button>
+
+            </div>
+
+
+            <!-- LOGIN BUTTON -->
+
+            <button
+              type="submit"
+              class="w-full
+                     bg-blue-600
+                     text-white
+                     py-4
+                     rounded-xl
+                     font-semibold
+                     mt-7
+                     hover:bg-blue-700
+                     transition
+                     shadow-lg
+                     shadow-blue-200">
+
+              Sign In
+
+              <i
+                class="fa-solid
+                       fa-arrow-right
+                       ml-2">
+              </i>
+
+            </button>
+
+          </form>
+
+
+          <!-- DEMO NOTICE -->
+
+          <div
+            class="login-info
+                   bg-blue-50
+                   border
+                   border-blue-100
+                   rounded-xl
+                   p-4
+                   mt-6">
+
+            <p class="text-sm text-blue-700">
+
+              <i
+                class="fa-solid
+                       fa-circle-info
+                       mr-2">
+              </i>
+
+              Demo login: enter any valid email
+              and password to access Carivo.
+
+            </p>
+
+          </div>
+
+
+          <p
+            class="text-center
+                   text-gray-500
+                   text-sm
+                   mt-7">
+
+            New to Carivo?
+
+            <button
+              onclick="createAccount()"
+              class="text-blue-600
+                     font-semibold">
+
+              Create an account
+
+            </button>
+
+          </p>
+
+        </div>
+
+
+        <p
+          class="login-footer
+                 text-center
+                 text-gray-400
+                 text-xs
+                 mt-6">
+
+          © 2026 Carivo. All rights reserved.
+
+        </p>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<!-- ========================================================= -->
+<!-- MAIN WEBSITE -->
+<!-- ========================================================= -->
+
+<div id="mainWebsite" class="hidden">
+
+
+<!-- ========================================================= -->
+<!-- NAVBAR -->
+<!-- ========================================================= -->
+
+<header
+  class="bg-white
+         shadow-sm
+         sticky
+         top-0
+         z-50">
+
+  <nav
+    class="max-w-7xl
+           mx-auto
+           px-5 sm:px-6
+           py-4">
+
+    <div
+      class="flex
+             items-center
+             justify-between">
+
+
+      <!-- LOGO -->
+
+      <button
+        onclick="showPage('home')"
+        class="tobi-logo text-gray-900">
+
+        <div class="tobi-logo-mark">
+
+          <i class="fa-solid fa-car-side"></i>
+
+        </div>
+
+        <span class="tobi-logo-text">
+
+          Carivo
+
+        </span>
+
+      </button>
+
+
+      <!-- DESKTOP NAV -->
+
+      <div
+        class="hidden
+               md:flex
+               items-center
+               gap-7">
+
+        <button
+          onclick="showPage('home')"
+          class="hover:text-blue-600
+                 transition">
+
+          Home
+
+        </button>
+
+        <button
+          onclick="showPage('cars')"
+          class="hover:text-blue-600
+                 transition">
+
+          Cars
+
+        </button>
+
+        <button
+          onclick="showPage('rent')"
+          class="hover:text-blue-600
+                 transition">
+
+          Rent
+
+        </button>
+
+        <button
+          onclick="showPage('buy')"
+          class="hover:text-blue-600
+                 transition">
+
+          Buy
+
+        </button>
+
+        <button
+          onclick="showPage('contact')"
+          class="hover:text-blue-600
+                 transition">
+
+          Contact
+
+        </button>
+
+      </div>
+
+
+      <!-- PHONE -->
+
+      <a
+        href="tel:08039596508"
+        class="hidden
+               lg:flex
+               items-center
+               gap-2
+               text-blue-600
+               font-semibold ml-10">
+
+        <i class="fa-solid fa-phone"></i>
+
+        08039596508
+
+      </a>
+      <a
+        href="email:rufaiadeola09@gmail.com"
+        class="hidden
+               lg:flex
+               items-center
+               gap-2
+               text-blue-600
+               font-semibold
+               mr-15">
+
+        <i class="fa-regular fa-envelope" style="color: rgb(116, 192, 252);"></i>
+        @rufaiadeola09@gmail.com
+
+      </a>
+
+      <!-- MOBILE MENU -->
+
+      <button
+        onclick="toggleMenu()"
+        class="md:hidden
+               text-xl">
+
+        <i class="fa-solid fa-bars"></i>
+
+      </button>
+
+    </div>
+
+
+    <!-- MOBILE NAV -->
+
+    <div
+      id="mobileMenu"
+      class="hidden
+             md:hidden
+             mt-5
+             border-t
+             pt-5">
+
+      <div
+        class="flex
+               flex-col
+               gap-4">
+
+        <button
+          onclick="showPage('home'); toggleMenu()"
+          class="text-left">
+
+          Home
+
+        </button>
+
+        <button
+          onclick="showPage('cars'); toggleMenu()"
+          class="text-left">
+
+          Cars
+
+        </button>
+
+        <button
+          onclick="showPage('rent'); toggleMenu()"
+          class="text-left">
+
+          Rent
+
+        </button>
+
+        <button
+          onclick="showPage('buy'); toggleMenu()"
+          class="text-left">
+
+          Buy
+
+        </button>
+
+        <button
+          onclick="showPage('contact'); toggleMenu()"
+          class="text-left">
+
+          Contact
+
+        </button>
+
+        <a
+          href="tel:08039596508"
+          class="text-blue-600
+                 font-semibold">
+
+          <i class="fa-solid fa-phone mr-2"></i>
+
+          08039596508
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </nav>
+
+</header>
+
+
+
+<!-- ========================================================= -->
+<!-- HOME -->
+<!-- ========================================================= -->
+
+<section id="home" class="page active">
+
+
+  <!-- HERO -->
+
+  <section
+    class="bg-gradient-to-br
+           from-blue-700
+           via-blue-600
+           to-blue-500
+           text-white">
+
+    <div
+      class="max-w-7xl
+             mx-auto
+             px-5 sm:px-6
+             py-16 md:py-24
+             grid md:grid-cols-2
+             gap-12
+             items-center">
+
+
+      <!-- HERO TEXT -->
+
+      <div>
+
+        <span
+          class="inline-block
+                 bg-white/10
+                 border
+                 border-white/20
+                 px-4
+                 py-2
+                 rounded-full
+                 text-sm
+                 mb-6">
+
+          <i class="fa-solid fa-star mr-2"></i>
+
+          Premium car marketplace
+
+        </span>
+
+
+        <h1
+          class="text-4xl
+                 sm:text-5xl
+                 md:text-6xl
+                 font-bold
+                 leading-tight">
+
+          Find the car
+
+          <span class="text-blue-200">
+
+            that fits your journey.
+
+          </span>
+
+        </h1>
+
+
+        <p
+          class="mt-6
+                 text-lg
+                 text-blue-100
+                 max-w-xl">
+
+          Rent premium vehicles by the hour
+          or find your next dream car with
+          Carivo.
+
+        </p>
+
+
+        <div
+          class="flex
+                 flex-wrap
+                 gap-4
+                 mt-8">
+
+          <button
+            onclick="showPage('cars')"
+            class="bg-white
+                   text-blue-700
+                   px-6
+                   py-3.5
+                   rounded-xl
+                   font-semibold
+                   hover:bg-gray-100
+                   transition">
+
+            <i class="fa-solid fa-car mr-2"></i>
+
+            Browse Cars
+
+          </button>
+
+
+          <button
+            onclick="showPage('rent')"
+            class="border
+                   border-white
+                   px-6
+                   py-3.5
+                   rounded-xl
+                   font-semibold
+                   hover:bg-white
+                   hover:text-blue-700
+                   transition">
+
+            <i class="fa-solid fa-key mr-2"></i>
+
+            Rent a Car
+
+          </button>
+
+        </div>
+
+
+        <div
+          class="flex
+                 flex-wrap
+                 gap-6
+                 mt-10
+                 text-sm
+                 text-blue-100">
+
+          <span>
+
+            <i class="fa-solid fa-circle-check mr-2"></i>
+
+            Easy Booking
+
+          </span>
+
+          <span>
+
+            <i class="fa-solid fa-shield-halved mr-2"></i>
+
+            Reliable
+
+          </span>
+
+          <span>
+
+            <i class="fa-solid fa-headset mr-2"></i>
+
+            Support
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <!-- HERO IMAGE -->
+
+      <div class="relative">
+
+        <img
+          src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?auto=format&fit=crop&w=1400&q=90"
+          alt="Luxury car"
+          class="w-full
+                 h-[300px]
+                 md:h-[430px]
+                 object-cover
+                 rounded-3xl
+                 shadow-2xl">
+
+
+        <div
+          class="absolute
+                 -bottom-6
+                 left-5
+                 bg-white
+                 text-gray-800
+                 rounded-2xl
+                 shadow-xl
+                 p-5">
+
+          <div
+            class="flex
+                   items-center
+                   gap-3">
+
+            <div
+              class="w-12
+                     h-12
+                     bg-blue-100
+                     text-blue-600
+                     rounded-full
+                     flex
+                     items-center
+                     justify-center">
+
+              <i class="fa-solid fa-car"></i>
+
+            </div>
+
+            <div>
+
+              <p
+                class="text-sm
+                       text-gray-500">
+
+                Premium vehicles
+
+              </p>
+
+              <p
+                class="font-bold
+                       text-lg">
+
+                100+ Cars
+
+              </p>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- SERVICES -->
+
+  <section
+    class="max-w-7xl
+           mx-auto
+           px-5 sm:px-6
+           py-20">
+
+    <div
+      class="text-center
+             mb-12">
+
+      <p class="text-blue-600 font-semibold">
+
+        WHAT WE OFFER
+
+      </p>
+
+      <h2
+        class="text-3xl
+               md:text-4xl
+               font-bold
+               mt-2">
+
+        Everything you need
+
+      </h2>
+
+      <p class="text-gray-500 mt-3">
+
+        Premium cars. Simple experience.
+
+      </p>
+
+    </div>
+
+
+    <div
+      class="grid
+             md:grid-cols-3
+             gap-7">
+
+
+      <!-- RENT -->
+
+      <div
+        class="bg-white
+               p-7
+               rounded-2xl
+               shadow-sm
+               hover:shadow-xl
+               transition">
+
+        <div
+          class="w-14
+                 h-14
+                 bg-blue-100
+                 text-blue-600
+                 rounded-xl
+                 flex
+                 items-center
+                 justify-center
+                 text-xl">
+
+          <i class="fa-solid fa-key"></i>
+
+        </div>
+
+        <h3
+          class="text-xl
+                 font-bold
+                 mt-6">
+
+          Rent a Car
+
+        </h3>
+
+        <p
+          class="text-gray-500
+                 mt-3">
+
+          Rent premium vehicles
+          by the hour for your
+          journey or event.
+
+        </p>
+
+        <button
+          onclick="showPage('rent')"
+          class="text-blue-600
+                 font-semibold
+                 mt-6">
+
+          Start Renting
+
+          <i class="fa-solid
+                    fa-arrow-right
+                    ml-2"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- BUY -->
+
+      <div
+        class="bg-white
+               p-7
+               rounded-2xl
+               shadow-sm
+               hover:shadow-xl
+               transition">
+
+        <div
+          class="w-14
+                 h-14
+                 bg-green-100
+                 text-green-600
+                 rounded-xl
+                 flex
+                 items-center
+                 justify-center
+                 text-xl">
+
+          <i class="fa-solid fa-cart-shopping"></i>
+
+        </div>
+
+        <h3
+          class="text-xl
+                 font-bold
+                 mt-6">
+
+          Buy a Car
+
+        </h3>
+
+        <p
+          class="text-gray-500
+                 mt-3">
+
+          Explore premium vehicles
+          and find your next car.
+
+        </p>
+
+        <button
+          onclick="showPage('buy')"
+          class="text-green-600
+                 font-semibold
+                 mt-6">
+
+          Start Buying
+
+          <i class="fa-solid
+                    fa-arrow-right
+                    ml-2"></i>
+
+        </button>
+
+      </div>
+
+
+      <!-- SUPPORT -->
+
+      <div
+        class="bg-white
+               p-7
+               rounded-2xl
+               shadow-sm
+               hover:shadow-xl
+               transition">
+
+        <div
+          class="w-14
+                 h-14
+                 bg-purple-100
+                 text-purple-600
+                 rounded-xl
+                 flex
+                 items-center
+                 justify-center
+                 text-xl">
+
+          <i class="fa-solid fa-headset"></i>
+
+        </div>
+
+        <h3
+          class="text-xl
+                 font-bold
+                 mt-6">
+
+          Customer Support
+
+        </h3>
+
+        <p
+          class="text-gray-500
+                 mt-3">
+
+          Need help choosing a car?
+          Contact our support team.
+
+        </p>
+
+        <a
+          href="tel:08039596508"
+          class="inline-block
+                 text-purple-600
+                 font-semibold
+                 mt-6">
+
+          08039596508
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </section>
+
+
+
+  <!-- FEATURED -->
+
+  <section class="bg-white">
+
+    <div
+      class="max-w-7xl
+             mx-auto
+             px-5 sm:px-6
+             py-20">
+
+      <div
+        class="flex
+               flex-col
+               md:flex-row
+               justify-between
+               md:items-end
+               gap-4
+               mb-10">
+
+        <div>
+
+          <p class="text-blue-600 font-semibold">
+
+            FEATURED
+
+          </p>
+
+          <h2
+            class="text-3xl
+                   md:text-4xl
+                   font-bold
+                   mt-2">
+
+            Premium collection
+
+          </h2>
+
+          <p class="text-gray-500 mt-2">
+
+            Explore some of our most popular vehicles.
+
+          </p>
+
+        </div>
+
+        <button
+          onclick="showPage('cars')"
+          class="text-blue-600
+                 font-semibold">
+
+          View all cars
+
+          <i class="fa-solid
+                    fa-arrow-right
+                    ml-2"></i>
+
+        </button>
+
+      </div>
+
+
+      <div
+        class="grid
+               sm:grid-cols-2
+               lg:grid-cols-4
+               gap-6">
+
+
+        <!-- FEATURE 1 -->
+
+        <div
+          class="rounded-2xl
+                 overflow-hidden
+                 border
+                 bg-gray-50">
+
+          <img
+            src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=900&q=90"
+            class="w-full
+                   h-48
+                   object-cover"
+            alt="Toyota Camry">
+
+          <div class="p-5">
+
+            <h3 class="font-bold text-lg">
+
+              Toyota Camry
+
+            </h3>
+
+            <p
+              class="text-blue-600
+                     font-semibold
+                     mt-2">
+
+              ₦550,000/hr
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 2 -->
+
+        <div
+          class="rounded-2xl
+                 overflow-hidden
+                 border
+                 bg-gray-50">
+
+          <img
+            src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=900&q=90"
+            class="w-full
+                   h-48
+                   object-cover"
+            alt="Mercedes Benz">
+
+          <div class="p-5">
+
+            <h3 class="font-bold text-lg">
+
+              Mercedes Benz
+
+            </h3>
+
+            <p
+              class="text-blue-600
+                     font-semibold
+                     mt-2">
+
+              ₦750,000/hr
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 3 -->
+
+        <div
+          class="rounded-2xl
+                 overflow-hidden
+                 border
+                 bg-gray-50">
+
+          <img
+            src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=900&q=90"
+            class="w-full
+                   h-48
+                   object-cover"
+            alt="Porsche">
+
+          <div class="p-5">
+
+            <h3 class="font-bold text-lg">
+
+              Porsche
+
+            </h3>
+
+            <p
+              class="text-blue-600
+                     font-semibold
+                     mt-2">
+
+              ₦900,000/hr
+
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <!-- FEATURE 4 -->
+
+        <div
+          class="rounded-2xl
+                 overflow-hidden
+                 border
+                 bg-gray-50">
+
+          <img
+            src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=900&q=90"
+            class="w-full
+                   h-48
+                   object-cover"
+            alt="BMW">
+
+          <div class="p-5">
+
+            <h3 class="font-bold text-lg">
+
+              BMW
+
+            </h3>
+
+            <p
+              class="text-blue-600
+                     font-semibold
+                     mt-2">
+
+              ₦650,000/hr
+
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- CARS PAGE -->
+<!-- ========================================================= -->
+
+<section id="cars" class="page">
+
+  <div
+    class="max-w-7xl
+           mx-auto
+           px-5 sm:px-6
+           py-12">
+
+
+    <button
+      onclick="showPage('home')"
+      class="text-gray-500
+             hover:text-blue-600
+             mb-8">
+
+      <i class="fa-solid
+                fa-arrow-left
+                mr-2"></i>
+
+      Back Home
+
+    </button>
+
+
+    <div
+      class="flex
+             flex-col
+             lg:flex-row
+             lg:items-end
+             justify-between
+             gap-5
+             mb-10">
+
+      <div>
+
+        <p
+          class="text-blue-600
+                 font-semibold">
+
+          OUR COLLECTION
+
+        </p>
+
+        <h1
+          class="text-4xl
+                 font-bold
+                 mt-2">
+
+          Find Your Car
+
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+
+          Rent or buy from our premium collection.
+
+        </p>
+
+      </div>
+
+
+      <!-- SEARCH -->
+
+      <div class="relative">
+
+        <i
+          class="fa-solid
+                 fa-magnifying-glass
+                 absolute
+                 left-4
+                 top-4
+                 text-gray-400">
+        </i>
+
+        <input
+          id="carSearch"
+          oninput="searchCars()"
+          type="text"
+          placeholder="Search for a car..."
+          class="w-full
+                 lg:w-80
+                 border
+                 rounded-xl
+                 pl-11
+                 pr-4
+                 py-3
+                 focus:ring-2
+                 focus:ring-blue-500">
+
+      </div>
+
+    </div>
+
+
+    <!-- CAR GRID -->
+
+    <div
+      id="carGrid"
+      class="grid
+             sm:grid-cols-2
+             lg:grid-cols-3
+             xl:grid-cols-4
+             gap-7">
+
+
+      <!-- TOYOTA -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Toyota Camry">
+
+        <img
+          src="https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Toyota Camry">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Toyota Camry
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦550,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦12,500,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Toyota Camry','₦550,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Toyota Camry','₦12,500,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- MERCEDES -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Mercedes Benz">
+
+        <img
+          src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Mercedes Benz">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Mercedes Benz
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦750,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦22,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Mercedes Benz','₦750,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Mercedes Benz','₦22,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- PORSCHE -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Porsche">
+
+        <img
+          src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Porsche">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Porsche
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦900,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦35,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              2
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Porsche','₦900,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Porsche','₦35,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- BMW -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="BMW">
+
+        <img
+          src="https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="BMW">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            BMW
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦650,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦18,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('BMW','₦650,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('BMW','₦18,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- RANGE ROVER -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Range Rover">
+
+        <img
+          src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Range Rover">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Range Rover
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦850,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦48,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Range Rover','₦850,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Range Rover','₦48,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- LEXUS -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Lexus">
+
+        <img
+          src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Lexus">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Lexus
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦600,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦20,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Lexus','₦600,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Lexus','₦20,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- AUDI -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Audi">
+
+        <img
+          src="https://images.unsplash.com/photo-1606664515524-ed2f786a0bd6?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Audi">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Audi
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦800,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦25,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-gears mr-1"></i>
+
+              Auto
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Audi','₦800,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Audi','₦25,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- TESLA -->
+
+      <div
+        class="car-card
+               bg-white
+               rounded-2xl
+               overflow-hidden
+               shadow-sm
+               hover:shadow-xl"
+        data-name="Tesla">
+
+        <img
+          src="https://images.unsplash.com/photo-1560958089-b8a1929cea89?auto=format&fit=crop&w=1000&q=90"
+          class="w-full
+                 h-52
+                 object-cover"
+          alt="Tesla">
+
+        <div class="p-5">
+
+          <h2 class="text-xl font-bold">
+
+            Tesla
+
+          </h2>
+
+          <p
+            class="text-blue-600
+                   font-bold
+                   mt-2">
+
+            ₦850,000/hr
+
+          </p>
+
+          <p
+            class="text-green-600
+                   font-semibold
+                   text-sm
+                   mt-1">
+
+            Buy: ₦32,000,000
+
+          </p>
+
+          <div
+            class="flex
+                   gap-3
+                   text-sm
+                   text-gray-500
+                   mt-4">
+
+            <span>
+
+              <i class="fa-solid fa-user mr-1"></i>
+
+              5
+
+            </span>
+
+            <span>
+
+              <i class="fa-solid fa-bolt mr-1"></i>
+
+              Electric
+
+            </span>
+
+          </div>
+
+          <div
+            class="grid
+                   grid-cols-2
+                   gap-3
+                   mt-5">
+
+            <button
+              onclick="chooseCar('Tesla','₦850,000/hr','rent')"
+              class="bg-blue-600
+                     text-white
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-700">
+
+              Rent
+
+            </button>
+
+            <button
+              onclick="chooseCar('Tesla','₦32,000,000','buy')"
+              class="border
+                     border-blue-600
+                     text-blue-600
+                     py-3
+                     rounded-lg
+                     hover:bg-blue-50">
+
+              Buy
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- RENT PAGE -->
+<!-- ========================================================= -->
+
+<section id="rent" class="page">
+
+  <div
+    class="max-w-4xl
+           mx-auto
+           px-5 sm:px-6
+           py-12">
+
+
+    <button
+      onclick="showPage('cars')"
+      class="text-gray-500
+             hover:text-blue-600
+             mb-8">
+
+      <i class="fa-solid
+                fa-arrow-left
+                mr-2"></i>
+
+      Back to Cars
+
+    </button>
+
+
+    <div
+      class="bg-white
+             rounded-2xl
+             shadow-sm
+             p-6 sm:p-8">
+
+
+      <p
+        class="text-blue-600
+               font-semibold">
+
+        HOURLY CAR RENTAL
+
+      </p>
+
+
+      <h1
+        class="text-3xl
+               font-bold
+               mt-2">
+
+        Book Your Car
+
+      </h1>
+
+
+      <p class="text-gray-500 mt-2">
+
+        Choose your vehicle and booking details.
+
+      </p>
+
+
+      <form
+        onsubmit="submitRental(event)"
+        class="mt-8 space-y-6">
+
+
+        <!-- CAR -->
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Selected Car
+
+          </label>
+
+          <select
+            id="rentCar"
+            required
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+            <option value="">
+              Choose a car
+            </option>
+
+            <option value="Toyota Camry">
+              Toyota Camry — ₦550,000/hr
+            </option>
+
+            <option value="Mercedes Benz">
+              Mercedes Benz — ₦750,000/hr
+            </option>
+
+            <option value="Porsche">
+              Porsche — ₦900,000/hr
+            </option>
+
+            <option value="BMW">
+              BMW — ₦650,000/hr
+            </option>
+
+            <option value="Range Rover">
+              Range Rover — ₦850,000/hr
+            </option>
+
+            <option value="Lexus">
+              Lexus — ₦600,000/hr
+            </option>
+
+            <option value="Audi">
+              Audi — ₦800,000/hr
+            </option>
+
+            <option value="Tesla">
+              Tesla — ₦850,000/hr
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <!-- HOURS -->
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Number of Hours
+
+          </label>
+
+          <input
+            id="rentalHours"
+            type="number"
+            min="1"
+            max="24"
+            value="1"
+            required
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+        </div>
+
+
+        <!-- LOCATION -->
+
+        <div
+          class="grid
+                 md:grid-cols-2
+                 gap-5">
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Pickup Location
+
+            </label>
+
+            <input
+              id="pickupLocation"
+              type="text"
+              placeholder="e.g. Ikeja"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Return Location
+
+            </label>
+
+            <input
+              id="returnLocation"
+              type="text"
+              placeholder="e.g. Victoria Island"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+        </div>
+
+
+        <!-- CUSTOMER -->
+
+        <div
+          class="grid
+                 md:grid-cols-2
+                 gap-5">
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Full Name
+
+            </label>
+
+            <input
+              id="customerName"
+              type="text"
+              placeholder="Your full name"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Phone Number
+
+            </label>
+
+            <input
+              id="customerPhone"
+              type="tel"
+              placeholder="08012345678"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+        </div>
+
+
+        <!-- REQUEST -->
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Additional Request
+
+          </label>
+
+          <textarea
+            id="rentalRequest"
+            rows="4"
+            placeholder="Any special request?"
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3"></textarea>
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="w-full
+                 bg-blue-600
+                 text-white
+                 py-4
+                 rounded-xl
+                 font-semibold
+                 hover:bg-blue-700">
+
+          Continue to Payment
+
+          <i
+            class="fa-solid
+                   fa-arrow-right
+                   ml-2"></i>
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- BUY PAGE -->
+<!-- ========================================================= -->
+
+<section id="buy" class="page">
+
+  <div
+    class="max-w-4xl
+           mx-auto
+           px-5 sm:px-6
+           py-12">
+
+
+    <button
+      onclick="showPage('cars')"
+      class="text-gray-500
+             hover:text-blue-600
+             mb-8">
+
+      <i class="fa-solid
+                fa-arrow-left
+                mr-2"></i>
+
+      Back to Cars
+
+    </button>
+
+
+    <div
+      class="bg-white
+             rounded-2xl
+             shadow-sm
+             p-6 sm:p-8">
+
+
+      <p
+        class="text-green-600
+               font-semibold">
+
+        CAR PURCHASE
+
+      </p>
+
+
+      <h1
+        class="text-3xl
+               font-bold
+               mt-2">
+
+        Buy Your Car
+
+      </h1>
+
+
+      <p class="text-gray-500 mt-2">
+
+        Tell us which premium vehicle you want.
+
+      </p>
+
+
+      <form
+        onsubmit="submitPurchase(event)"
+        class="mt-8 space-y-6">
+
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Selected Car
+
+          </label>
+
+          <select
+            id="buyCar"
+            required
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+            <option value="">
+              Choose a car
+            </option>
+
+            <option value="Toyota Camry">
+              Toyota Camry — ₦12,500,000
+            </option>
+
+            <option value="Mercedes Benz">
+              Mercedes Benz — ₦22,000,000
+            </option>
+
+            <option value="Porsche">
+              Porsche — ₦35,000,000
+            </option>
+
+            <option value="BMW">
+              BMW — ₦18,000,000
+            </option>
+
+            <option value="Range Rover">
+              Range Rover — ₦48,000,000
+            </option>
+
+            <option value="Lexus">
+              Lexus — ₦20,000,000
+            </option>
+
+            <option value="Audi">
+              Audi — ₦25,000,000
+            </option>
+
+            <option value="Tesla">
+              Tesla — ₦32,000,000
+            </option>
+
+          </select>
+
+        </div>
+
+
+        <div
+          class="grid
+                 md:grid-cols-2
+                 gap-5">
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Full Name
+
+            </label>
+
+            <input
+              id="buyerName"
+              type="text"
+              placeholder="Your full name"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+
+          <div>
+
+            <label
+              class="block
+                     font-medium
+                     mb-2">
+
+              Phone Number
+
+            </label>
+
+            <input
+              id="buyerPhone"
+              type="tel"
+              placeholder="08012345678"
+              required
+              class="w-full
+                     border
+                     rounded-xl
+                     p-3">
+
+          </div>
+
+        </div>
+
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Email Address
+
+          </label>
+
+          <input
+            id="buyerEmail"
+            type="email"
+            placeholder="you@example.com"
+            required
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+        </div>
+
+
+        <div>
+
+          <label
+            class="block
+                   font-medium
+                   mb-2">
+
+            Delivery / Pickup Location
+
+          </label>
+
+          <input
+            id="deliveryLocation"
+            type="text"
+            placeholder="Where should the car go?"
+            required
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+        </div>
+
+
+        <button
+          type="submit"
+          class="w-full
+                 bg-green-600
+                 text-white
+                 py-4
+                 rounded-xl
+                 font-semibold
+                 hover:bg-green-700">
+
+          Continue to Payment
+
+          <i
+            class="fa-solid
+                   fa-arrow-right
+                   ml-2"></i>
+
+        </button>
+
+      </form>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- PAYMENT PAGE -->
+<!-- ========================================================= -->
+
+<section id="payment" class="page">
+
+  <div
+    class="max-w-6xl
+           mx-auto
+           px-5 sm:px-6
+           py-12">
+
+
+    <button
+      onclick="showPage(previousPage)"
+      class="text-gray-500
+             hover:text-blue-600
+             mb-8">
+
+      <i class="fa-solid
+                fa-arrow-left
+                mr-2"></i>
+
+      Back
+
+    </button>
+
+
+    <div
+      class="grid
+             lg:grid-cols-3
+             gap-8">
+
+
+      <!-- PAYMENT -->
+
+      <div
+        class="lg:col-span-2
+               bg-white
+               rounded-2xl
+               shadow-sm
+               p-6 sm:p-8">
+
+        <p
+          class="text-blue-600
+                 font-semibold">
+
+          SECURE CHECKOUT
+
+        </p>
+
+        <h1
+          class="text-3xl
+                 font-bold
+                 mt-2">
+
+          Complete Payment
+
+        </h1>
+
+        <p class="text-gray-500 mt-2">
+
+          Choose your preferred payment method.
+
+        </p>
+
+
+        <div
+          class="grid
+                 grid-cols-2
+                 gap-4
+                 mt-8">
+
+          <button
+            id="cardButton"
+            onclick="paymentMethod('card')"
+            class="border-2
+                   border-blue-600
+                   text-blue-600
+                   p-5
+                   rounded-xl">
+
+            <i
+              class="fa-solid
+                     fa-credit-card
+                     text-xl">
+            </i>
+
+            <p class="font-semibold mt-2">
+
+              Card
+
+            </p>
+
+            <p class="text-xs text-gray-500">
+
+              Debit / Credit Card
+
+            </p>
+
+          </button>
+
+
+          <button
+            id="transferButton"
+            onclick="paymentMethod('transfer')"
+            class="border
+                   p-5
+                   rounded-xl">
+
+            <i
+              class="fa-solid
+                     fa-building-columns
+                     text-xl">
+            </i>
+
+            <p class="font-semibold mt-2">
+
+              Bank Transfer
+
+            </p>
+
+            <p class="text-xs text-gray-500">
+
+              Direct Transfer
+
+            </p>
+
+          </button>
+
+        </div>
+
+
+        <!-- CARD DEMO -->
+
+        <div
+          id="cardArea"
+          class="mt-8">
+
+          <div
+            class="bg-blue-50
+                   border
+                   border-blue-100
+                   rounded-xl
+                   p-5
+                   mb-6">
+
+            <p
+              class="text-sm
+                     text-gray-600">
+
+              <i
+                class="fa-solid
+                       fa-shield-halved
+                       text-blue-600
+                       mr-2">
+              </i>
+
+              This is a presentation/demo checkout.
+              No real payment is processed.
+
+            </p>
+
+          </div>
+
+
+          <button
+            onclick="completePayment()"
+            class="w-full
+                   bg-blue-600
+                   text-white
+                   py-4
+                   rounded-xl
+                   font-semibold
+                   hover:bg-blue-700">
+
+            <i
+              class="fa-solid
+                     fa-lock
+                     mr-2">
+            </i>
+
+            Confirm Demo Payment
+
+          </button>
+
+        </div>
+
+
+        <!-- TRANSFER -->
+
+        <div
+          id="transferArea"
+          class="hidden
+                 mt-8">
+
+          <div
+            class="bg-blue-50
+                   border
+                   border-blue-100
+                   rounded-xl
+                   p-6">
+
+            <div
+              class="flex
+                     gap-3">
+
+              <i
+                class="fa-solid
+                       fa-circle-info
+                       text-blue-600
+                       mt-1">
+              </i>
+
+              <div>
+
+                <h3 class="font-bold">
+
+                  Bank Transfer
+
+                </h3>
+
+                <p
+                  class="text-sm
+                         text-gray-600
+                         mt-1">
+
+                  Demo bank details for presentation.
+
+                </p>
+
+              </div>
+
+            </div>
+
+
+            <div
+              class="bg-white
+                     rounded-xl
+                     p-5
+                     mt-6
+                     space-y-5">
+
+              <div
+                class="flex
+                       justify-between
+                       gap-4">
+
+                <span class="text-gray-500">
+
+                  Bank
+
+                </span>
+
+                <span class="font-semibold">
+
+                  Carivo Bank
+
+                </span>
+
+              </div>
+
+
+              <div
+                class="flex
+                       justify-between
+                       gap-4">
+
+                <span class="text-gray-500">
+
+                  Account Name
+
+                </span>
+
+                <span class="font-semibold">
+
+                  Carivo
+
+                </span>
+
+              </div>
+
+
+              <div
+                class="flex
+                       justify-between
+                       gap-4">
+
+                <span class="text-gray-500">
+
+                  Account Number
+
+                </span>
+
+                <span class="font-semibold">
+
+                  0000 0000 0000
+
+                </span>
+
+              </div>
+
+            </div>
+
+
+            <button
+              onclick="completePayment()"
+              class="w-full
+                     bg-blue-600
+                     text-white
+                     py-4
+                     rounded-xl
+                     font-semibold
+                     mt-6">
+
+              <i
+                class="fa-solid
+                       fa-check
+                       mr-2">
+              </i>
+
+              Confirm Demo Transfer
+
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+
+      <!-- SUMMARY -->
+
+      <div
+        class="bg-white
+               rounded-2xl
+               shadow-sm
+               p-6
+               h-fit">
+
+        <h2
+          class="text-xl
+                 font-bold">
+
+          Order Summary
+
+        </h2>
+
+
+        <div
+          class="border-t
+                 mt-5
+                 pt-5
+                 space-y-5">
+
+
+          <div
+            class="flex
+                   justify-between
+                   gap-4">
+
+            <span class="text-gray-500">
+
+              Service
+
+            </span>
+
+            <span
+              id="summaryService"
+              class="font-medium
+                     text-right">
+
+              Car Rental
+
+            </span>
+
+          </div>
+
+
+          <div
+            class="flex
+                   justify-between
+                   gap-4">
+
+            <span class="text-gray-500">
+
+              Car
+
+            </span>
+
+            <span
+              id="summaryCar"
+              class="font-medium
+                     text-right">
+
+              Selected Car
+
+            </span>
+
+          </div>
+
+
+          <div
+            class="flex
+                   justify-between
+                   gap-4">
+
+            <span class="text-gray-500">
+
+              Price
+
+            </span>
+
+            <span
+              id="summaryPrice"
+              class="font-medium
+                     text-right">
+
+              ₦0
+
+            </span>
+
+          </div>
+
+
+          <div
+            class="border-t
+                   pt-5
+                   flex
+                   justify-between">
+
+            <span class="font-bold">
+
+              Total
+
+            </span>
+
+            <span
+              id="summaryTotal"
+              class="font-bold
+                     text-blue-600
+                     text-xl">
+
+              ₦0
+
+            </span>
+
+          </div>
+
+        </div>
+
+
+        <div
+          class="bg-gray-50
+                 rounded-xl
+                 p-4
+                 mt-7">
+
+          <p class="text-sm text-gray-500">
+
+            Need help?
+
+          </p>
+
+          <a
+            href="tel:08039596508"
+            class="font-semibold
+                   text-blue-600
+                   inline-block
+                   mt-1">
+
+            <i
+              class="fa-solid
+                     fa-phone
+                     mr-2">
+            </i>
+
+            08039596508
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- SUCCESS PAGE -->
+<!-- ========================================================= -->
+
+<section id="success" class="page">
+
+  <div
+    class="min-h-[80vh]
+           flex
+           items-center
+           justify-center
+           px-5
+           py-12">
+
+    <div
+      class="bg-white
+             max-w-lg
+             w-full
+             rounded-3xl
+             shadow-lg
+             p-7 sm:p-10
+             text-center">
+
+
+      <div
+        class="w-20
+               h-20
+               bg-green-100
+               text-green-600
+               rounded-full
+               flex
+               items-center
+               justify-center
+               text-4xl
+               mx-auto">
+
+        <i class="fa-solid fa-check"></i>
+
+      </div>
+
+
+      <h1
+        class="text-3xl
+               font-bold
+               mt-7">
+
+        Request Received!
+
+      </h1>
+
+
+      <p
+        class="text-gray-500
+               mt-3">
+
+        Thank you for choosing Carivo.
+        Your request has been received successfully.
+
+      </p>
+
+
+      <div
+        class="bg-gray-50
+               rounded-xl
+               p-5
+               mt-7
+               text-left">
+
+
+        <div
+          class="flex
+                 justify-between
+                 gap-4">
+
+          <span class="text-gray-500">
+
+            Reference
+
+          </span>
+
+          <span
+            id="reference"
+            class="font-semibold">
+
+            CAR-000000
+
+          </span>
+
+        </div>
+
+
+        <div
+          class="border-t
+                 my-4">
+        </div>
+
+
+        <div
+          class="flex
+                 justify-between
+                 gap-4">
+
+          <span class="text-gray-500">
+
+            Car
+
+          </span>
+
+          <span
+            id="successCar"
+            class="font-semibold
+                   text-right">
+
+            Selected Car
+
+          </span>
+
+        </div>
+
+
+        <div
+          class="border-t
+                 my-4">
+        </div>
+
+
+        <div
+          class="flex
+                 justify-between
+                 gap-4">
+
+          <span class="text-gray-500">
+
+            Amount
+
+          </span>
+
+          <span
+            id="successAmount"
+            class="font-bold
+                   text-blue-600">
+
+            ₦0
+
+          </span>
+
+        </div>
+
+      </div>
+
+
+      <p
+        class="text-sm
+               text-gray-500
+               mt-6">
+
+        Need assistance?
+
+        <a
+          href="tel:08039596508"
+          class="text-blue-600
+                 font-semibold">
+
+          08039596508
+
+        </a>
+
+      </p>
+
+
+      <div
+        class="grid
+               grid-cols-2
+               gap-4
+               mt-8">
+
+        <button
+          onclick="showPage('home')"
+          class="border
+                 border-gray-300
+                 py-3
+                 rounded-xl">
+
+          Home
+
+        </button>
+
+
+        <button
+          onclick="showPage('cars')"
+          class="bg-blue-600
+                 text-white
+                 py-3
+                 rounded-xl">
+
+          Browse Cars
+
+        </button>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- CONTACT PAGE -->
+<!-- ========================================================= -->
+
+<section id="contact" class="page">
+
+  <div
+    class="max-w-5xl
+           mx-auto
+           px-5 sm:px-6
+           py-16">
+
+
+    <button
+      onclick="showPage('home')"
+      class="text-gray-500
+             hover:text-blue-600
+             mb-8">
+
+      <i class="fa-solid
+                fa-arrow-left
+                mr-2">
+      </i>
+
+      Back Home
+
+    </button>
+
+
+    <div
+      class="grid
+             md:grid-cols-2
+             gap-8">
+
+
+      <div
+        class="bg-blue-600
+               text-white
+               rounded-3xl
+               p-8">
+
+        <div
+          class="w-14
+                 h-14
+                 bg-white/10
+                 rounded-xl
+                 flex
+                 items-center
+                 justify-center
+                 text-xl">
+
+          <i
+            class="fa-solid
+                   fa-headset">
+          </i>
+
+        </div>
+
+
+        <h1
+          class="text-3xl
+                 font-bold
+                 mt-7">
+
+          Need Help?
+
+        </h1>
+
+
+        <p
+          class="text-blue-100
+                 mt-4">
+
+          Contact Carivo if you have
+          questions about a vehicle,
+          booking or payment.
+
+        </p>
+
+
+        <div class="mt-8">
+
+          <p class="text-blue-200">
+
+            Phone
+
+          </p>
+
+          <a
+            href="tel:08039596508"
+            class="text-xl
+                   font-bold
+                   inline-block
+                   mt-1">
+
+            08039596508
+
+          </a>
+
+        </div>
+
+      </div>
+
+
+      <div
+        class="bg-white
+               rounded-3xl
+               shadow-sm
+               p-8">
+
+        <h2
+          class="text-2xl
+                 font-bold">
+
+          Send an Enquiry
+
+        </h2>
+
+
+        <div
+          class="space-y-5
+                 mt-7">
+
+          <input
+            type="text"
+            placeholder="Your name"
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+
+          <input
+            type="email"
+            placeholder="Your email"
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3">
+
+
+          <textarea
+            rows="5"
+            placeholder="How can we help?"
+            class="w-full
+                   border
+                   rounded-xl
+                   p-3"></textarea>
+
+
+          <a
+            href="tel:08039596508"
+            class="block
+                   text-center
+                   bg-blue-600
+                   text-white
+                   py-4
+                   rounded-xl
+                   font-semibold">
+
+            Contact Carivo
+
+          </a>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- ========================================================= -->
+<!-- FOOTER -->
+<!-- ========================================================= -->
+
+<footer
+  class="bg-gray-950
+         text-white
+         py-10">
+
+  <div
+    class="max-w-7xl
+           mx-auto
+           px-5 sm:px-6">
+
+
+    <div
+      class="flex
+             flex-col
+             md:flex-row
+             justify-between
+             gap-7">
+
+
+      <div>
+
+        <div class="tobi-logo">
+
+          <div class="tobi-logo-mark">
+
+            <i class="fa-solid fa-car-side"></i>
+
+          </div>
+
+          <span
+            class="tobi-logo-text text-white">
+
+            TOBI<span>Carivo</span>
+
+          </span>
+
+        </div>
+
+        <p
+          class="text-gray-400
+                 mt-2">
+
+          Rent it. Buy it. Drive it.
+
+        </p>
+
+      </div>
+
+
+      <div>
+
+        <p
+          class="text-gray-500
+                 text-sm">
+
+          Customer Support
+
+        </p>
+
+        <a
+          href="tel:08039596508"
+          class="font-semibold
+                 text-lg">
+
+          08039596508
+
+        </a>
+
+      </div>
+
+
+      <div>
+
+        <p
+          class="text-gray-500
+                 text-sm">
+
+          Quick Links
+
+        </p>
+
+        <div
+          class="flex
+                 gap-5
+                 mt-2">
+
+          <button
+            onclick="showPage('home')"
+            class="text-gray-400
+                   hover:text-white">
+
+            Home
+
+          </button>
+
+          <button
+            onclick="showPage('cars')"
+            class="text-gray-400
+                   hover:text-white">
+
+            Cars
+
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div
+      class="border-t
+             border-gray-800
+             mt-8
+             pt-6
+             text-center
+             text-gray-500
+             text-sm">
+
+      © 2026 Carivo.
+      All rights reserved.
+
+    </div>
+
+  </div>
+
+</footer>
+
+</div>
+
+
+
+<!-- ========================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ========================================================= -->
+
+<script>
+
+/* =========================================================
+   VARIABLES
+========================================================= */
+
+let selectedCar = "Selected Car";
+
+let selectedPrice = "₦0";
+
+let selectedService = "Car Rental";
+
+let previousPage = "cars";
+
+let rentalHours = 1;
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function loginUser(event) {
+
+  event.preventDefault();
+
+  const email =
+    document.getElementById("loginEmail").value;
+
+  const password =
+    document.getElementById("loginPassword").value;
+
+
+  if (!email || !password) {
+
+    alert("Please enter your email and password.");
+
+    return;
+
+  }
+
+
+  document
+    .getElementById("loginScreen")
+    .classList.add("hidden");
+
+
+  document
+    .getElementById("mainWebsite")
+    .classList.remove("hidden");
+
+
+  showPage("home");
+
+}
+
+
+/* =========================================================
+   PASSWORD VISIBILITY
+========================================================= */
+
+function togglePassword() {
+
+  const password =
+    document.getElementById("loginPassword");
+
+  const icon =
+    document.getElementById("passwordIcon");
+
+
+  if (password.type === "password") {
+
+    password.type = "text";
+
+    icon.className =
+      "fa-solid fa-eye-slash";
+
+  }
+
+  else {
+
+    password.type = "password";
+
+    icon.className =
+      "fa-solid fa-eye";
+
+  }
+
+}
+
+
+/* =========================================================
+   FORGOT PASSWORD
+========================================================= */
+
+function forgotPassword() {
+
+  alert(
+    "Password recovery is available when Carivo is connected to a real account system."
+  );
+
+}
+
+
+/* =========================================================
+   CREATE ACCOUNT
+========================================================= */
+
+function createAccount() {
+
+  alert(
+    "Account registration can be connected to a database later."
+  );
+
+}
+
+
+/* =========================================================
+   PAGE NAVIGATION
+========================================================= */
+
+function showPage(page) {
+
+  const pages =
+    document.querySelectorAll(".page");
+
+
+  pages.forEach(function(item) {
+
+    item.classList.remove("active");
+
+  });
+
+
+  const selected =
+    document.getElementById(page);
+
+
+  if (selected) {
+
+    selected.classList.add("active");
+
+  }
+
+
+  window.scrollTo({
+
+    top: 0,
+
+    behavior: "smooth"
+
+  });
+
+}
+
+
+/* =========================================================
+   MOBILE MENU
+========================================================= */
+
+function toggleMenu() {
+
+  const menu =
+    document.getElementById("mobileMenu");
+
+
+  menu.classList.toggle("hidden");
+
+}
+
+
+/* =========================================================
+   CHOOSE CAR
+========================================================= */
+
+function chooseCar(car, price, action) {
+
+  selectedCar = car;
+
+  selectedPrice = price;
+
+
+  if (action === "rent") {
+
+    previousPage = "cars";
+
+    showPage("rent");
+
+    document
+      .getElementById("rentCar")
+      .value = car;
+
+  }
+
+
+  if (action === "buy") {
+
+    previousPage = "cars";
+
+    showPage("buy");
+
+    document
+      .getElementById("buyCar")
+      .value = car;
+
+  }
+
+}
+
+
+/* =========================================================
+   RENT SUBMIT
+========================================================= */
+
+function submitRental(event) {
+
+  event.preventDefault();
+
+
+  selectedService = "Car Rental";
+
+
+  selectedCar =
+    document
+      .getElementById("rentCar")
+      .value;
+
+
+  rentalHours =
+    Number(
+      document
+        .getElementById("rentalHours")
+        .value
+    );
+
+
+  const hourlyPrice =
+    getRentPrice(selectedCar);
+
+
+  const priceNumber =
+    parsePrice(hourlyPrice);
+
+
+  const total =
+    priceNumber * rentalHours;
+
+
+  selectedPrice =
+    "₦" +
+    total.toLocaleString() +
+    " (" +
+    rentalHours +
+    " hour" +
+    (rentalHours > 1 ? "s" : "") +
+    ")";
+
+
+  previousPage = "rent";
+
+
+  updateSummary();
+
+
+  showPage("payment");
+
+}
+
+
+/* =========================================================
+   BUY SUBMIT
+========================================================= */
+
+function submitPurchase(event) {
+
+  event.preventDefault();
+
+
+  selectedService =
+    "Car Purchase";
+
+
+  selectedCar =
+    document
+      .getElementById("buyCar")
+      .value;
+
+
+  selectedPrice =
+    getBuyPrice(selectedCar);
+
+
+  previousPage = "buy";
+
+
+  updateSummary();
+
+
+  showPage("payment");
+
+}
+
+
+/* =========================================================
+   RENT PRICES
+========================================================= */
+
+function getRentPrice(car) {
+
+  const prices = {
+
+    "Toyota Camry":
+      "₦550,000/hr",
+
+    "Mercedes Benz":
+      "₦750,000/hr",
+
+    "Porsche":
+      "₦900,000/hr",
+
+    "BMW":
+      "₦650,000/hr",
+
+    "Range Rover":
+      "₦850,000/hr",
+
+    "Lexus":
+      "₦600,000/hr",
+
+    "Audi":
+      "₦800,000/hr",
+
+    "Tesla":
+      "₦850,000/hr"
+
+  };
+
+
+  return prices[car] || "₦0/hr";
+
+}
+
+
+/* =========================================================
+   BUY PRICES
+========================================================= */
+
+function getBuyPrice(car) {
+
+  const prices = {
+
+    "Toyota Camry":
+      "₦12,500,000",
+
+    "Mercedes Benz":
+      "₦22,000,000",
+
+    "Porsche":
+      "₦35,000,000",
+
+    "BMW":
+      "₦18,000,000",
+
+    "Range Rover":
+      "₦48,000,000",
+
+    "Lexus":
+      "₦20,000,000",
+
+    "Audi":
+      "₦25,000,000",
+
+    "Tesla":
+      "₦32,000,000"
+
+  };
+
+
+  return prices[car] || "₦0";
+
+}
+
+
+/* =========================================================
+   CONVERT PRICE TO NUMBER
+========================================================= */
+
+function parsePrice(price) {
+
+  return Number(
+    price
+      .replace("₦", "")
+      .replace("/hr", "")
+      .replace(/,/g, "")
+  );
+
+}
+
+
+/* =========================================================
+   PAYMENT SUMMARY
+========================================================= */
+
+function updateSummary() {
+
+  document
+    .getElementById("summaryService")
+    .textContent =
+    selectedService;
+
+
+  document
+    .getElementById("summaryCar")
+    .textContent =
+    selectedCar;
+
+
+  document
+    .getElementById("summaryPrice")
+    .textContent =
+    selectedPrice;
+
+
+  document
+    .getElementById("summaryTotal")
+    .textContent =
+    selectedPrice;
+
+}
+
+
+/* =========================================================
+   PAYMENT METHOD
+========================================================= */
+
+function paymentMethod(method) {
+
+  const card =
+    document.getElementById("cardArea");
+
+  const transfer =
+    document.getElementById("transferArea");
+
+  const cardButton =
+    document.getElementById("cardButton");
+
+  const transferButton =
+    document.getElementById("transferButton");
+
+
+  if (method === "card") {
+
+    card.classList.remove("hidden");
+
+    transfer.classList.add("hidden");
+
+
+    cardButton.classList.add(
+      "border-blue-600",
+      "text-blue-600"
+    );
+
+
+    transferButton.classList.remove(
+      "border-blue-600",
+      "text-blue-600"
+    );
+
+  }
+
+
+  if (method === "transfer") {
+
+    transfer.classList.remove("hidden");
+
+    card.classList.add("hidden");
+
+
+    transferButton.classList.add(
+      "border-blue-600",
+      "text-blue-600"
+    );
+
+
+    cardButton.classList.remove(
+      "border-blue-600",
+      "text-blue-600"
+    );
+
+  }
+
+}
+
+
+/* =========================================================
+   COMPLETE PAYMENT
+========================================================= */
+
+function completePayment() {
+
+  const reference =
+    "CAR-" +
+    Math.floor(
+      100000 +
+      Math.random() * 900000
+    );
+
+
+  document
+    .getElementById("reference")
+    .textContent =
+    reference;
+
+
+  document
+    .getElementById("successCar")
+    .textContent =
+    selectedCar;
+
+
+  document
+    .getElementById("successAmount")
+    .textContent =
+    selectedPrice;
+
+
+  showPage("success");
+
+}
+
+
+/* =========================================================
+   SEARCH CARS
+========================================================= */
+
+function searchCars() {
+
+  const search =
+    document
+      .getElementById("carSearch")
+      .value
+      .toLowerCase();
+
+
+  const cars =
+    document.querySelectorAll(".car-card");
+
+
+  cars.forEach(function(car) {
+
+    const name =
+      car.dataset.name
+        .toLowerCase();
+
+
+    if (name.includes(search)) {
+
+      car.style.display = "";
+
+    }
+
+    else {
+
+      car.style.display = "none";
+
+    }
+
+  });
+
+}
+
+</script>
+
+
+</body>
+
+</html>

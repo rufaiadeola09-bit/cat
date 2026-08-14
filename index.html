@@ -511,8 +511,7 @@
                        mr-2">
               </i>
 
-              Demo login: enter any valid email
-              and password to access Carivo.
+              Create an account to save your login details and access Carivo securely.
 
             </p>
 
@@ -2781,8 +2780,6 @@
 
 </section>
 
-
-
 <!-- ========================================================= -->
 <!-- BUY PAGE -->
 <!-- ========================================================= -->
@@ -3038,7 +3035,6 @@
   </div>
 
 </section>
-
 
 
 <!-- ========================================================= -->
@@ -4077,103 +4073,315 @@ let previousPage = "cars";
 
 let rentalHours = 1;
 
+/* =========================================================
+   LOGIN
+========================================================= */
+
+/* =========================================================
+   ACCOUNT / AUTHENTICATION
+   Browser-only authentication using localStorage.
+========================================================= */
+
+function getCarivoAccounts() {
+  const raw = localStorage.getItem("carivoAccounts");
+
+  if (raw) {
+    try {
+      const accounts = JSON.parse(raw);
+      return Array.isArray(accounts) ? accounts : [];
+    } catch (error) {
+      localStorage.removeItem("carivoAccounts");
+    }
+  }
+
+  /* Migrate the old single-account version automatically */
+  const oldAccount = localStorage.getItem("carivoAccount");
+  if (oldAccount) {
+    try {
+      const account = JSON.parse(oldAccount);
+      if (account && account.email) {
+        const accounts = [account];
+        localStorage.setItem("carivoAccounts", JSON.stringify(accounts));
+        return accounts;
+      }
+    } catch (error) {
+      localStorage.removeItem("carivoAccount");
+    }
+  }
+
+  return [];
+}
+
+function saveCarivoAccounts(accounts) {
+  localStorage.setItem("carivoAccounts", JSON.stringify(accounts));
+}
+
+function findCarivoAccount(email) {
+  const normalizedEmail = String(email || "").trim().toLowerCase();
+  return getCarivoAccounts().find(function(account) {
+    return String(account.email || "").trim().toLowerCase() === normalizedEmail;
+  }) || null;
+}
+
+function closeAuthModal() {
+  const modal = document.getElementById("carivoAuthModal");
+  if (modal) modal.remove();
+}
+
+function showAuthModal(mode) {
+  closeAuthModal();
+
+  const isCreate = mode === "create";
+  const title = isCreate ? "Create your Carivo account" : "Reset your password";
+  const subtitle = isCreate
+    ? "Create an account to continue to Carivo."
+    : "Enter the email on your Carivo account and choose a new password.";
+
+  const modal = document.createElement("div");
+  modal.id = "carivoAuthModal";
+  modal.className = "fixed inset-0 z-[100] bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-5";
+
+  modal.innerHTML = `
+    <div class="w-full max-w-md bg-white rounded-3xl shadow-2xl p-6 sm:p-8 max-h-[90vh] overflow-y-auto">
+      <div class="flex items-center justify-between mb-6">
+        <div>
+          <div class="tobi-logo mb-3">
+            <div class="tobi-logo-mark"><i class="fa-solid fa-car-side"></i></div>
+          </div>
+          <h2 class="text-2xl font-bold text-gray-900">${title}</h2>
+          <p class="text-gray-500 mt-1 text-sm">${subtitle}</p>
+        </div>
+        <button type="button" onclick="closeAuthModal()" class="w-10 h-10 rounded-full bg-gray-100 text-gray-500 hover:bg-gray-200">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+      </div>
+
+      <form id="carivoAuthForm" class="space-y-5">
+        ${isCreate ? `
+          <div>
+            <label class="block font-medium mb-2">Full Name</label>
+            <input id="createName" type="text" required placeholder="Enter your full name" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+          </div>
+          <div>
+            <label class="block font-medium mb-2">Email Address</label>
+            <input id="createEmail" type="email" required placeholder="you@example.com" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+          </div>
+        ` : `
+          <div>
+            <label class="block font-medium mb-2">Email Address</label>
+            <input id="resetEmail" type="email" required placeholder="you@example.com" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+          </div>
+        `}
+
+        <div>
+          <label class="block font-medium mb-2">${isCreate ? "Password" : "New Password"}</label>
+          <input id="${isCreate ? "createPassword" : "resetPassword"}" type="password" minlength="4" required placeholder="At least 4 characters" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <div>
+          <label class="block font-medium mb-2">Confirm Password</label>
+          <input id="${isCreate ? "createConfirmPassword" : "resetConfirmPassword"}" type="password" minlength="4" required placeholder="Enter the password again" class="w-full border rounded-xl p-3 focus:ring-2 focus:ring-blue-500">
+        </div>
+
+        <p id="authFormMessage" class="hidden text-sm rounded-xl p-3"></p>
+
+        <button type="submit" class="w-full bg-blue-600 text-white py-3.5 rounded-xl font-semibold hover:bg-blue-700 transition shadow-lg shadow-blue-200">
+          ${isCreate ? "Create Account" : "Reset Password"}
+          <i class="fa-solid ${isCreate ? "fa-user-plus" : "fa-key"} ml-2"></i>
+        </button>
+      </form>
+
+      <p class="text-center text-sm text-gray-500 mt-6">
+        ${isCreate ? "Already have an account?" : "Remember your password?"}
+        <button type="button" onclick="closeAuthModal(); document.getElementById('loginEmail').focus();" class="text-blue-600 font-semibold ml-1">
+          Go to Sign In
+        </button>
+      </p>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  document.getElementById("carivoAuthForm").addEventListener("submit", function(event) {
+    if (isCreate) {
+      submitCreateAccount(event);
+    } else {
+      submitForgotPassword(event);
+    }
+  });
+
+  document.getElementById(isCreate ? "createName" : "resetEmail").focus();
+}
+
+function showAuthMessage(message, type = "error") {
+  const box = document.getElementById("authFormMessage");
+  if (!box) return;
+
+  box.textContent = message;
+  box.className = type === "success"
+    ? "text-sm rounded-xl p-3 bg-green-50 text-green-700 border border-green-100"
+    : "text-sm rounded-xl p-3 bg-red-50 text-red-700 border border-red-100";
+}
 
 /* =========================================================
    LOGIN
 ========================================================= */
 
 function loginUser(event) {
-
   event.preventDefault();
 
-  const email =
-    document.getElementById("loginEmail").value;
+  const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const password = document.getElementById("loginPassword").value;
+  const account = findCarivoAccount(email);
 
-  const password =
-    document.getElementById("loginPassword").value;
-
-
-  if (!email || !password) {
-
-    alert("Please enter your email and password.");
-
+  if (!account) {
+    alert("No Carivo account was found with this email. Please create an account first.");
+    showAuthModal("create");
+    document.getElementById("createEmail").value = email;
     return;
-
   }
 
+  if (password !== account.password) {
+    alert("Incorrect password. Please try again or use Forgot Password.");
+    return;
+  }
 
-  document
-    .getElementById("loginScreen")
-    .classList.add("hidden");
-
-
-  document
-    .getElementById("mainWebsite")
-    .classList.remove("hidden");
-
-
+  document.getElementById("loginScreen").classList.add("hidden");
+  document.getElementById("mainWebsite").classList.remove("hidden");
   showPage("home");
-
 }
-
-
-/* =========================================================
-   PASSWORD VISIBILITY
-========================================================= */
-
-function togglePassword() {
-
-  const password =
-    document.getElementById("loginPassword");
-
-  const icon =
-    document.getElementById("passwordIcon");
-
-
-  if (password.type === "password") {
-
-    password.type = "text";
-
-    icon.className =
-      "fa-solid fa-eye-slash";
-
-  }
-
-  else {
-
-    password.type = "password";
-
-    icon.className =
-      "fa-solid fa-eye";
-
-  }
-
-}
-
 
 /* =========================================================
    FORGOT PASSWORD
 ========================================================= */
 
 function forgotPassword() {
+  const accounts = getCarivoAccounts();
 
-  alert(
-    "Password recovery is available when Carivo is connected to a real account system."
-  );
+  if (accounts.length === 0) {
+    alert("No Carivo account exists yet. Please create an account first.");
+    showAuthModal("create");
+    return;
+  }
 
+  showAuthModal("forgot");
 }
 
+function submitForgotPassword(event) {
+  event.preventDefault();
+
+  const email = document.getElementById("resetEmail").value.trim().toLowerCase();
+  const newPassword = document.getElementById("resetPassword").value;
+  const confirmPassword = document.getElementById("resetConfirmPassword").value;
+  const accounts = getCarivoAccounts();
+  const accountIndex = accounts.findIndex(function(account) {
+    return String(account.email || "").trim().toLowerCase() === email;
+  });
+
+  if (accountIndex === -1) {
+    showAuthMessage("No Carivo account was found with this email address. Please create an account first.");
+    return;
+  }
+
+  if (newPassword.length < 4) {
+    showAuthMessage("Your new password must contain at least 4 characters.");
+    return;
+  }
+
+  if (newPassword !== confirmPassword) {
+    showAuthMessage("The passwords do not match. Please try again.");
+    return;
+  }
+
+  accounts[accountIndex].password = newPassword;
+  saveCarivoAccounts(accounts);
+
+  closeAuthModal();
+  document.getElementById("loginEmail").value = accounts[accountIndex].email;
+  document.getElementById("loginPassword").value = "";
+
+  alert("Your password has been changed successfully. You can now log in with your new password.");
+}
 
 /* =========================================================
    CREATE ACCOUNT
 ========================================================= */
 
 function createAccount() {
+  /* Always open the real create-account form.
+     The email is checked when the user submits it. */
+  showAuthModal("create");
+}
 
-  alert(
-    "Account registration can be connected to a database later."
-  );
+function submitCreateAccount(event) {
+  event.preventDefault();
 
+  const name = document.getElementById("createName").value.trim();
+  const email = document.getElementById("createEmail").value.trim().toLowerCase();
+  const password = document.getElementById("createPassword").value;
+  const confirmPassword = document.getElementById("createConfirmPassword").value;
+  const accounts = getCarivoAccounts();
+
+  if (!name) {
+    showAuthMessage("Please enter your full name.");
+    return;
+  }
+
+  if (!email || !email.includes("@") || !email.includes(".")) {
+    showAuthMessage("Please enter a valid email address.");
+    return;
+  }
+
+  if (findCarivoAccount(email)) {
+    showAuthMessage("An account already exists with this email. Please sign in or use Forgot Password.");
+    return;
+  }
+
+  if (password.length < 4) {
+    showAuthMessage("Your password must contain at least 4 characters.");
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    showAuthMessage("The passwords do not match. Please try again.");
+    return;
+  }
+
+  accounts.push({
+    name: name,
+    email: email,
+    password: password
+  });
+
+  saveCarivoAccounts(accounts);
+
+  closeAuthModal();
+  document.getElementById("loginEmail").value = email;
+  document.getElementById("loginPassword").value = "";
+
+  alert("Your Carivo account has been created successfully. You can now sign in.");
+  document.getElementById("loginPassword").focus();
+}
+
+/* =========================================================
+   PASSWORD VISIBILITY
+========================================================= */
+
+function togglePassword() {
+  const passwordInput = document.getElementById("loginPassword");
+  const icon = document.getElementById("passwordIcon");
+
+  if (!passwordInput || !icon) return;
+
+  if (passwordInput.type === "password") {
+    passwordInput.type = "text";
+    icon.classList.remove("fa-eye");
+    icon.classList.add("fa-eye-slash");
+  } else {
+    passwordInput.type = "password";
+    icon.classList.remove("fa-eye-slash");
+    icon.classList.add("fa-eye");
+  }
 }
 
 
@@ -4361,8 +4569,6 @@ function submitPurchase(event) {
   showPage("payment");
 
 }
-
-
 /* =========================================================
    RENT PRICES
 ========================================================= */
